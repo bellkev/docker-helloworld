@@ -13,5 +13,10 @@ test:
     - curl --retry 10 --retry-delay 5 -v http://localhost:9200
   post:
     - docker stop $(docker ps -q)
-    - cat .dockercfg.template | sed "s/<EMAIL>/$DOCKER_EMAIL/;s/<AUTH>/$DOCKER_AUTH/" > ~/.dockercfg
-    - docker push bellkev/docker-helloworld
+
+deployment:
+  hub:
+    branch: master
+    commands:
+      - cat .dockercfg.template | sed "s/<EMAIL>/$DOCKER_EMAIL/;s/<AUTH>/$DOCKER_AUTH/" > ~/.dockercfg
+      - docker push bellkev/docker-helloworld
