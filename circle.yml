@@ -11,3 +11,7 @@ test:
   override:
     - docker run -d -p 9200:9200 bellkev/docker-helloworld; sleep 10
     - curl --retry 10 --retry-delay 5 -v http://localhost:9200
+  post:
+    - docker stop $(docker ps -q)
+    - cat .dockercfg.template | sed "s/<EMAIL>/$DOCKER_EMAIL/;s/<AUTH>/$DOCKER_AUTH/" > ~/.dockercfg
+    - docker push bellkev/docker-helloworld
